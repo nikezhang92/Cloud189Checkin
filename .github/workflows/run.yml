@@ -79,3 +79,22 @@ jobs:
           repository: ${{ github.repository }}
           retain_days: 0
           keep_minimum_runs: 50
+          
+      - name: 📢 Send notification via Server酱
+        if: always()
+        run: |
+          JOB_STATUS="${{ job.status }}"
+          REPO="${{ github.repository }}"
+          RUN_URL="https://github.com/${REPO}/actions/runs/${{ github.run_id }}"
+          COMMIT_MSG="$(git log -1 --pretty=%B)"
+          TITLE="GitHub Actions 通知"
+          
+          if [ "$JOB_STATUS" = "success" ]; then
+            DESP="✅ 任务执行成功\n\n🔗 [查看运行记录](${RUN_URL})\n\n📄 提交信息：\n${COMMIT_MSG}"
+          else
+            DESP="❌ 任务执行失败\n\n🔗 [查看运行记录](${RUN_URL})\n\n📄 提交信息：\n${COMMIT_MSG}\n\n💥 状态：${JOB_STATUS}"
+          fi
+          
+          curl -s -X POST "https://sctapi.ftqq.com/${{ secrets.SENDKEY }}.send" \
+            -d "title=${TITLE}" \
+            --data-urlencode "desp=${DESP}"
