@@ -1,3 +1,5 @@
+![签到状态](https://img.shields.io/github/actions/workflow/status/nikezhang92/Cloud189Checkin/run.yml?branch=main&label=签到状态&style=flat-square)
+
 # Cloud189Checkin
 
 天翼网盘自动签到（随机容量），~~家庭空间签到（随机容量）~~。
