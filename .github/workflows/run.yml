@@ -49,6 +49,9 @@ jobs:
       - name: 📡 Init dependencies
         run: npm install
 
+      - name: 🪧 Debug trigger source
+        run: echo "Trigger type: ${{ github.event_name }}"
+
       - name: 🚀 Run
         uses: nick-fields/retry@master
         with:
